@@ -9,7 +9,7 @@ using namespace std;
 extern "C" {
 
 JNIEXPORT void JNICALL
-Java_com_example_home_opencvtest2_MainActivity_loadImage(
+Java_kr_co_ipdisk_home35_PRIMA_MainActivity_loadImage(
         JNIEnv *env,
         jobject,
         jstring imageFileName,
@@ -28,7 +28,7 @@ Java_com_example_home_opencvtest2_MainActivity_loadImage(
 }
 
 JNIEXPORT void JNICALL
-Java_com_example_home_opencvtest2_MainActivity_imageprocessing(
+Java_kr_co_ipdisk_home35_PRIMA_MainActivity_imageprocessing(
         JNIEnv *env,
         jobject,
         jlong addrInputImage,

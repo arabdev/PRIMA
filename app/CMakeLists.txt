@@ -3,7 +3,7 @@
 # value of 3.4.0 or lower.
 
 set(pathOpenCv C:/OpenCV-android-sdk)
-set(pathProject C:/Users/home/AndroidStudioProjects/openCVTest2)
+set(pathProject C:/PRIMA)
 
 cmake_minimum_required(VERSION 3.4.1)
 
