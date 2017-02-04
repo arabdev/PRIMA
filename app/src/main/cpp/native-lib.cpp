@@ -30,17 +30,24 @@ Java_kr_co_ipdisk_home35_PRIMA_MainActivity_imageprocessing(
         JNIEnv *env,
         jobject,
         jlong addrInputImage,
-        jlong addrOutputImage) {
+        jlong addrImage2,
+        jlong addrImage3,
+        jlong addrDrawing,
+        jlong addrOutputImage,
+        jlong addrInterest) {
 
     Rect rect, temp_rect;
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
     double ratio, delta_x, delta_y, gradient;
     int select, plate_width, count, friend_count = 0, refinery_count = 0;
-    Mat image2, image3;
+
     Mat &img_input = *(Mat *) addrInputImage;
+    Mat &image2 = *(Mat *) addrImage2;
+    Mat &image3 = *(Mat *) addrImage3;
+    Mat &drawing = *(Mat *) addrDrawing;
     Mat &img_output = *(Mat *) addrOutputImage;
-    Mat drawing;
+    Mat &interest =  *(Mat *) addrInterest;
 
     cvtColor(img_input, img_input, CV_BGR2RGB);
     img_input.copyTo(image2);
@@ -140,8 +147,7 @@ Java_kr_co_ipdisk_home35_PRIMA_MainActivity_imageprocessing(
     img_output = image3;
 
 
-    imwrite("/storage/emulated/0/test.jpg",
-            img_input(Rect(boundRect2[select].tl().x - 20, boundRect2[select].tl().y - 20,
-                           plate_width + 40, plate_width * 0.3)));
+    interest = img_input(Rect(boundRect2[select].tl().x - 20, boundRect2[select].tl().y - 20,
+                           plate_width + 40, plate_width * 0.3));
 }
 }
