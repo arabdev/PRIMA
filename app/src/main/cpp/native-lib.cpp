@@ -149,5 +149,8 @@ Java_kr_co_ipdisk_home35_PRIMA_MainActivity_imageprocessing(
 
     interest = img_input(Rect(boundRect2[select].tl().x - 20, boundRect2[select].tl().y - 20,
                            plate_width + 40, plate_width * 0.3));
+
+    //imwrite("interest.jpg", interest, );  //TODO vector에 뭘넣어야되냐.... orz
+
 }
 }
