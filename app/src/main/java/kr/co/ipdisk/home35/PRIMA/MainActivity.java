@@ -14,6 +14,8 @@ import android.widget.ImageView;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.features2d.Features2d;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,19 +29,10 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    ImageView imageViewInput;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView imageVIewDrawing;
-    ImageView imageViewOutput;
-    ImageView imageViewInterest;
-
+    ImageView imageVIewInput;
+    ImageView imageVIewOuput;
     private Mat img_input;
-    private Mat img_2;
-    private Mat img_3;
-    private Mat img_drawing;
     private Mat img_output;
-    private Mat img_interest;
 
     private static final String TAG = "opencv";
     static final int PERMISSION_REQUEST_CODE = 1;
@@ -147,14 +140,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(kr.co.ipdisk.home35.PRIMA.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        imageViewInput = (ImageView)findViewById(R.id.imageViewInput);
-        imageView2 = (ImageView)findViewById(R.id.imageView2);
-        imageView3 = (ImageView)findViewById(R.id.imageView3);
-        imageVIewDrawing = (ImageView)findViewById(R.id.imageViewDrawing);
-        imageViewOutput = (ImageView)findViewById(R.id.imageViewOutput);
-        imageViewInterest = (ImageView)findViewById(R.id.imageViewInterest);
+        imageVIewInput = (ImageView)findViewById(R.id.imageViewInput);
+        imageVIewOuput = (ImageView)findViewById(R.id.imageViewOutput);
 
         if (!hasPermissions(PERMISSIONS)) { //퍼미션 허가를 했었는지 여부를 확인
             requestNecessaryPermissions(PERMISSIONS);//퍼미션 허가안되어 있다면 사용자에게 요청
@@ -167,46 +156,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void imageprocess_and_showResult() {
 
-        imageprocessing(img_input.getNativeObjAddr(), img_2.getNativeObjAddr(), img_3.getNativeObjAddr(), img_drawing.getNativeObjAddr(), img_output.getNativeObjAddr(), img_interest.getNativeObjAddr());
+        imageprocessing(img_input.getNativeObjAddr(), img_output.getNativeObjAddr());
 
         Bitmap bitmapInput = Bitmap.createBitmap(img_input.cols(), img_input.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(img_input, bitmapInput);
-        imageViewInput.setImageBitmap(bitmapInput);
-
-        Bitmap bitmapImg2 = Bitmap.createBitmap(img_2.cols(), img_2.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(img_2, bitmapImg2);
-        imageView2.setImageBitmap(bitmapImg2);
-
-        Bitmap bitmapImg3 = Bitmap.createBitmap(img_3.cols(), img_3.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(img_3, bitmapImg3);
-        imageView3.setImageBitmap(bitmapImg3);
-
-        Bitmap bitmapDrawing = Bitmap.createBitmap(img_drawing.cols(), img_drawing.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(img_drawing, bitmapDrawing);
-        imageVIewDrawing.setImageBitmap(bitmapDrawing);
+        imageVIewInput.setImageBitmap(bitmapInput);
 
         Bitmap bitmapOutput = Bitmap.createBitmap(img_output.cols(), img_output.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(img_output, bitmapOutput);
-        imageViewOutput.setImageBitmap(bitmapOutput);
-
-        Bitmap bitmapInterest = Bitmap.createBitmap(img_interest.cols(), img_interest.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(img_interest, bitmapInterest);
-        imageViewInterest.setImageBitmap(bitmapInterest);
-
+        imageVIewOuput.setImageBitmap(bitmapOutput);
     }
 
     private void read_image_file() {
         copyFile("ball.jpg");
 
         img_input = new Mat();
-        img_2 = new Mat();
-        img_3 = new Mat();
-        img_drawing = new Mat();
         img_output = new Mat();
-        img_interest = new Mat();
 
         loadImage("ball.jpg", img_input.getNativeObjAddr());
     }
+
 
 
     /**
@@ -214,5 +183,5 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native void loadImage(String imageFileName, long img);
-    public native void imageprocessing(long inputImage, long img2, long img3, long drawing, long outputImage, long interest);
+    public native void imageprocessing(long inputImage, long outputImage);
 }
